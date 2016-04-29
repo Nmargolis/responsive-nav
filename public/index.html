@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+    <head>
+        <title>HUGE NavExercise</title>
+        <link rel="stylesheet" href="/styles/main.css">
+    </head>
+    <body>
+
+        <!-- Navigation bar -->
+        <nav class="navcontainer" role="navigation" aria-label="Main menu">
+            <img id="hamburger" src="images/toggle-open.svg" alt="Hamburger icon">
+            <ul class="navbar" role="menubar">
+                <li class="logo navitem primary" role="menuitem" tabindex="0">
+                    <a href="#"><img src="/images/HUGE-white.png" alt="Huge logo"></a>
+                </li>
+                <li class="navitem primary" role="menuitem" tabindex="0" aria-haspopup="true"><a href="#">Example1</a>
+                    <ul class="navdropdown" role="menu" aria-hidden="true">
+                        <li class="navitem secondary" role="menuitem" tabindex="-1">
+                            <a href="#">sub-item1</a>
+                        </li>
+                        <li class="navitem secondary" role="menuitem" tabindex="-1">
+                            <a href="#">sub-item2</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="navitem primary" role="menuitem" tabindex="0" aria-haspopup="true">
+                    <a href="#">Example2</a>
+                    <ul class="navdropdown" role="menu" aria-hidden="true">
+                        <li class="navitem secondary" role="menuitem" tabindex="-1">
+                            <a href="#">sub-item2</a>
+                        </li>
+                        <li class="navitem secondary" role="menuitem" tabindex="-1">
+                            <a href="#">sub-item2</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Content --> 
+        <div id="overlay"></div>
+        <section id="main-image">
+            <h1>Get paid for giving a shit.</h1>
+        </section>
+        <section class="body-copy">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor</p>
+        </section>
+    </body>
+    </html>
