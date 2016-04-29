@@ -6,10 +6,13 @@ var DATA_DIR = path.join(__dirname, '..', 'data');
 
 /* GET home page. */
 router.get('*', function(req, res) {
-  // console.log('res: ' + res);
   res.sendfile(path.join(DATA_DIR, req.url));
 });
 
 module.exports = router;
 
 console.log('hello');
+
+app.get('/api/nav.json', function(req, res) {
+    res.send()
+})

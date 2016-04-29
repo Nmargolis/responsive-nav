@@ -59,7 +59,7 @@ ul {
 }
 
 
-.navbar {
+#navbar {
   display: flex;
   display: -webkit-flex;
   display: -moz-flex;
