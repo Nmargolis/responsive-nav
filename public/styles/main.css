@@ -1,3 +1,4 @@
+
 @import "fonts.css";
 
 /* Colors
@@ -8,24 +9,25 @@
 
 body {
   background: #fff;
-  /*color: #000;*/
   padding: 0;
   margin: 0;
+  overflow: hidden;
 }
 
 h1 {
   position: absolute;
-  width: 75%;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  width: 75%;  
   margin: 0;
 
-  /* Fonts */
-  font: 120px/132px HUGEAvantGardeBold;
-  /*letter-spacing: -0.03em;*/
+  color: #000;
+  font: 44px/48px HUGEAvantGardeBold;
   text-align: center;
+
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+
+  /*letter-spacing: -0.03em;*/
+
 }
 
 a {
@@ -37,45 +39,78 @@ ul {
   list-style-type: none;
 }
 
-#hamburger {
-  /*display: none;*/
+#toggle-container {
   position: absolute;
-  /*padding: 20px 24px;*/
+  width: 100%;
+  background: #ec008c;
+  height: 60px;
+}
 
-  transform: translateX(-100%);
+#toggle-open-close {
+  position: absolute;
+  height: 60px;
+  width: 72px;
+  right: calc(100% - 72px);
+  z-index: 100;
+
+  background-image: url("../images/toggle-open.svg");
+  background-position: center;
+
+  -webkit-transition: 1s ease;
+  transition: 1s ease;
+  /*padding: 20px 24px;*/
+}
+
+#toggle-open-close.opened {
+ background-image: url("../images/toggle-close.svg");
+ right: 0;
+ /*right: 0;*/
 }
 
 .navcontainer {
   position: absolute;
   width: 100%;
-  height: 72px;
+  height: 100%;
   top: 0;
   left: 0;
   margin:0;
   padding: 0;
   z-index: 9999999999;
-
-  background: #ec008c;
 }
 
 
 #navbar {
-  display: flex;
-  display: -webkit-flex;
-  display: -moz-flex;
+  /*display: none;*/
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  
+  transform: translateX(-100%);
+  transition: 1s ease-in-out;
+}
+
+
+#navbar.visible {
+  display: flex;
+  display: -webkit-flex;
+  display: -moz-flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  transform: translateX(0);
 }
 
 
 .primary {
-  padding: 12px 24px;
+  padding: 0;
+  margin-right: 72px;
 
-  color: #fff;
+  color: #000;
+  background: #FFFFFF;
   font: 21px/48px HUGEAvantGardeBold;
 
   /* debug */
@@ -83,19 +118,23 @@ ul {
 
 }
 
-.primary:hover {
-  background: #fff;
-  color: #ec008c;
+/* Make background for logo magenta */
+  .primary:first-child {
+  background: #ec008c;
 }
 
+/* Keep background magenta for logo image */
 .primary:first-child:hover {
   background: #ec008c;
 }
 
+ .primary:hover {
+  background: #eee;
+  }
+
 .secondary {
   padding: 12px;
-  font: 16px/48px Galaxie;
-
+  font: 16px/48px Galaxie
 }
 
 .secondary:hover {
@@ -104,30 +143,36 @@ ul {
 }
 
 .navdropdown{
-  position: absolute;
-  margin-left: -24px;
-  margin-top: 12px;
+  display: none;
+  position: relative;
   padding: 0;
+  margin: 0;
 
   background: white;
   color: black;
 
-  /*transform:translateX(-1000%);*/
-  transition:all .3s ease-in-out;
+  transform: translateY(-48px);
+  transition: all .3s ease;
 
   /* debug */
    border: 1px solid black;
 }
 
+.navdropdown.expanded{
+  display: block;
+  transform: translateY(0);
+  
+}
 
 .logo {
-  width: 60px;
-  padding-right: 24px;
+  width: 50px;
+  height: 36px;
+  padding: 12px;
 }
 
 .logo img {
-  width: 60px;
-  vertical-align: middle;
+  width: 50px;
+  vertical-align: baseline;
 }
 
 
@@ -148,16 +193,20 @@ ul {
 
 }
 
+/* Class to make overlay visible*/
+#overlay.visible {
+  display: block;
+}
+
 #main-image {
   position: relative;
   width: 100%;
-  height: 640px;
-  margin-top: 72px;
+  height: 240px;
+  margin-top: 60px;
 
   background-image: url("../images/background-image.jpg");
-  background-size: cover;
+  background-size: auto 240px;
   background-color: #eee;
-  color: #FFFFFF;
 }
 
 .body-copy {
@@ -171,12 +220,105 @@ ul {
   text-align: center;
 }
 
-
-/* Styles for mobile */
-@media (max-width: 768px) {
-
-
+#copyright {
+  font: 12px/16px "HelveticaNeue-Regular", "Helvetica Neue Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  position: relative;
+  height: 100%;
+  margin-right: 72px;
+  background: #fff;
 }
 
+#copyright > div {
+  position: absolute;
+  bottom: 0;
+}
 
+/* Styles for desktop */
+@media (min-width: 769px) {
 
+  h1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    color: #fff;
+    font: 120px/132px HUGEAvantGardeBold;
+
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+  #toggle-open-close {
+    transform: translateX(-100%);
+  }
+
+  #toggle-container {
+    display: none;
+  }
+
+  .navcontainer {
+    height: 72px;
+    background: #ec008c;
+  }
+
+  #navbar {
+    display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    transform: translateX(0);
+
+    transition: none;
+  }
+
+  .primary {
+    padding: 12px 24px;
+    margin-right: 0;
+    background: inherit;
+
+    color: #fff;
+  }
+
+  .primary:hover, .primary.open{
+    background: #fff;
+    color: #ec008c;
+  }
+
+  .navdropdown {
+    position: absolute;
+    margin-left: -24px;
+    margin-top: 12px;
+
+    transform: translateX(-1000%);
+  }
+
+  .navdropdown.expanded{
+    transform: translateX(0);
+  }
+
+  .navdropdown.expanded{
+    display: block;
+    transform: translateX(0);
+  }
+
+  .logo {
+    width: 60px;
+    padding-right: 24px;
+  }
+
+  .logo img {
+    width: 60px;
+    vertical-align: middle;
+  }
+
+  #main-image {
+    margin-top: 72px;
+    height: 640px;
+    background-size: cover;
+  }
+
+  #copyright {
+    display: none;
+  }
+}
