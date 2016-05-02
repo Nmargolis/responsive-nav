@@ -257,18 +257,24 @@ function toggleNavbar() {
   // Grab the overlay element
   var overlay = document.getElementById('overlay');
 
+  // Grab content element
+  var content = document.getElementById('content-wrapper');
+
   // If the navbar is opened
   if (toggleButton.classList.contains('opened')) {
     toggleButton.classList.remove('opened');
     toggleButton.setAttribute('aria-pressed', 'false');
     navbar.classList.remove('visible');
     overlay.classList.remove('visible');
+    content.classList.remove('pushed');
   } else {
     toggleButton.classList.add('opened');
     toggleButton.setAttribute('aria-pressed', 'true');
     navbar.classList.add('visible');
     overlay.classList.add('visible');
+    content.classList.add('pushed');
   }
+
 }
 
 // Function to hide dropdown and hide overlay.
