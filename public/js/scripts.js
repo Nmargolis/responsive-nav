@@ -4,7 +4,7 @@
 
 // Function generates AJAX request for nav items and handles response
 
-function ajaxReq (method, url, callback) {
+function ajaxReq(method, url, callback) {
   var xhttp = new XMLHttpRequest();
   xhttp.open(method, url, true);
   xhttp.send();
@@ -19,7 +19,7 @@ function ajaxReq (method, url, callback) {
 //Function to generate html for each submenu
 function returnSubNav(items) {
   var subMenu = '';
-  
+
   // Function to generate submenu html
   // Defined inside here so it can access submenu variable
   function generateSubNav(item, i, array) {
@@ -35,9 +35,17 @@ function returnSubNav(items) {
     // Create new link element with item url
     var a = document.createElement('a');
     a.setAttribute('href', item.url);
-    
+
     // Add item label as the text
     a.appendChild(document.createTextNode(item.label));
+
+    // Add event listener to a to hide menu card when clicked and navigating to new page
+    a.onclick = function() {
+      if (isMobile()) {
+        console.log('is mobile');
+        toggleNavbar();
+      }
+    };
 
     // Add the link to the new list item
     subItem.appendChild(a);
@@ -63,7 +71,7 @@ function returnSubNav(items) {
 
 
 // Function to generate html for each primary nav item
-function generatePrimaryNav(label, url, items=false) {
+function generatePrimaryNav(label, url, items = false) {
   // Create listItem element
   var listItem = document.createElement('Li');
 
@@ -81,12 +89,24 @@ function generatePrimaryNav(label, url, items=false) {
 
   listItem.appendChild(a);
 
+
   // console.log('new listItem: ' + listItem);
-  
+
   // If there are submenu items, generate the html for that and add it to listItem
   if (items && items.length > 0) {
+
     // Add the aria-haspopup class to the primary listItem
     listItem.setAttribute('aria-haspopup', true);
+
+    // Generate image element for chevron
+    var chevron = document.createElement('img');
+    chevron.setAttribute('src', '../images/chevron.svg');
+    chevron.setAttribute('class', 'chevron');
+    chevron.setAttribute('alt', 'chevron');
+
+    // Add chevron to list item
+    listItem.appendChild(chevron);
+
     // Generate the submenu ul element and append it to the primary listItem
     listItem.appendChild(returnSubNav(items));
   }
@@ -106,7 +126,7 @@ function generateCopyright() {
 }
 
 // Function to show drowpdown
-function showDropdown (dropdown) {
+function showDropdown(dropdown) {
   dropdown.classList.add('expanded');
   dropdown.removeAttribute('aria-hidden');
   dropdown.parentElement.classList.add('open');
@@ -114,7 +134,7 @@ function showDropdown (dropdown) {
 
 
 // Function to change dropdown state back to hidden
-function hideDropdown (dropdown) {
+function hideDropdown(dropdown) {
   dropdown.classList.remove('expanded');
   dropdown.setAttribute('aria-hidden', true);
   dropdown.parentElement.classList.remove('open');
@@ -122,11 +142,10 @@ function hideDropdown (dropdown) {
 
 // Function to return true if screen is < 768px
 function isMobile() {
-  if (screen.width <= 768) {
+  if (window.innerWidth <= 768) {
     // console.log(true);
     return true;
-  }
-  else {
+  } else {
     // console.log(false);
     return false;
   }
@@ -143,7 +162,7 @@ function addOpenDropdownActions() {
 
   // console.log('primaries: ' + primaries);
 
-  primaries.forEach(function(item, i, array){
+  primaries.forEach(function(item, i, array) {
     item.onclick = function() {
       // console.log(this.childNodes);
 
@@ -156,8 +175,8 @@ function addOpenDropdownActions() {
       // If this item has a submenu
       if (this.childNodes.length > 1) {
 
-        // Grab the dropdown, which is the 2nd child node
-        var thisDropdown = this.childNodes[1];
+        // Grab the dropdown, which is the 3rd child node
+        var thisDropdown = this.childNodes[2];
 
         // If this element's dropdown is open, close the dropdown and remove the overlay on desktop
         if (openDropdown && thisDropdown.classList.contains('expanded')) {
@@ -201,15 +220,15 @@ function addOpenDropdownActions() {
 
 // Function takes navbar items as json and adds them to DOM
 // This is the callback function fired when AJAX request responds
-function addNavItems (navItemsText) {
+function addNavItems(navItemsText) {
   // Grab navbar element
   var navbar = document.getElementById('navbar');
 
-  var navJson= JSON.parse(navItemsText);
+  var navJson = JSON.parse(navItemsText);
   var navItems = navJson.items;
 
   // Iterate through JSON object
-  navItems.forEach(function (navItem, i, array){
+  navItems.forEach(function(navItem, i, array) {
 
     // Generate the html as a string for each item in the response
     var toAdd = generatePrimaryNav(navItem.label, navItem.url, navItem.items);
@@ -244,13 +263,25 @@ function toggleNavbar() {
     toggleButton.setAttribute('aria-pressed', 'false');
     navbar.classList.remove('visible');
     overlay.classList.remove('visible');
-  }
-  else {
+  } else {
     toggleButton.classList.add('opened');
     toggleButton.setAttribute('aria-pressed', 'true');
     navbar.classList.add('visible');
     overlay.classList.add('visible');
   }
+}
+
+// Function to hide dropdown and hide overlay.
+// Will be fired if user clicks anywhere other than nav
+function hideOnOverlayClick() {
+
+  // Grab open dropdown and overlay elements
+  var openDropdown = document.querySelector('.expanded');
+  var overlay = document.getElementById('overlay');
+
+  // Hide open dropdown and overlay elements
+  hideDropdown(openDropdown);
+  overlay.classList.remove('visible');
 }
 
 
@@ -264,15 +295,13 @@ window.onload = function() {
 
   // Add event listener to overlay to hide dropdown and hide overlay 
   // if user clicks anywhere other than nav, since overlay covers everything else
-  overlay.onclick = function(){
-    var openDropdown = document.querySelector('.expanded');
-    hideDropdown(openDropdown);
-    overlay.classList.remove('visible');
-  };
+  overlay.onclick = hideOnOverlayClick;
 
-  //Add event listener to togglebutton
+  // Add event listener to togglebutton
   var toggleButton = document.getElementById('toggle-open-close');
 
   toggleButton.onclick = toggleNavbar;
+
+
 
 };
