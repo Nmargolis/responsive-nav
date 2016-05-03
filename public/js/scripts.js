@@ -115,15 +115,15 @@ function generatePrimaryNav(label, url, items = false) {
   return listItem;
 }
 
-function generateCopyright() {
-  var copyright = document.createElement('Li');
-  copyright.setAttribute('id', 'copyright');
-  var innerdiv = document.createElement('div');
-  innerdiv.appendChild(document.createTextNode('© 2014 Huge. All Rights Reserved'));
-  copyright.appendChild(innerdiv);
-  console.log(copyright);
-  return copyright;
-}
+// function generateCopyright() {
+//   var copyright = document.createElement('');
+//   copyright.setAttribute('id', 'copyright');
+//   var innerdiv = document.createElement('div');
+//   innerdiv.appendChild(document.createTextNode('© 2014 Huge. All Rights Reserved'));
+//   copyright.appendChild(innerdiv);
+//   console.log(copyright);
+//   return copyright;
+// }
 
 // Function to show drowpdown
 function showDropdown(dropdown) {
@@ -135,6 +135,7 @@ function showDropdown(dropdown) {
 
 // Function to change dropdown state back to hidden
 function hideDropdown(dropdown) {
+
   dropdown.classList.remove('expanded');
   dropdown.setAttribute('aria-hidden', true);
   dropdown.parentElement.classList.remove('open');
@@ -238,7 +239,7 @@ function addNavItems(navItemsText) {
   });
 
   // Add copyright as last item
-  navbar.appendChild(generateCopyright());
+  // navbar.appendChild(generateCopyright());
 
   // Attach click events to primary nav items with submenus
   addOpenDropdownActions();
@@ -252,7 +253,7 @@ function toggleNavbar() {
   var toggleButton = document.getElementById('toggle-open-close');
 
   // Grab the navbar element
-  var navbar = document.getElementById('navbar');
+  var navcontainer = document.getElementById('navcontainer');
 
   // Grab the overlay element
   var overlay = document.getElementById('overlay');
@@ -260,19 +261,29 @@ function toggleNavbar() {
   // Grab content element
   var content = document.getElementById('content-wrapper');
 
+  // Grab the logo
+  var logo = document.getElementById('logo');
+
   // If the navbar is opened
   if (toggleButton.classList.contains('opened')) {
+
+
+
     toggleButton.classList.remove('opened');
     toggleButton.setAttribute('aria-pressed', 'false');
-    navbar.classList.remove('visible');
+    navcontainer.classList.remove('visible');
     overlay.classList.remove('visible');
     content.classList.remove('pushed');
+    logo.classList.remove('visible');
+
+
   } else {
     toggleButton.classList.add('opened');
     toggleButton.setAttribute('aria-pressed', 'true');
-    navbar.classList.add('visible');
+    navcontainer.classList.add('visible');
     overlay.classList.add('visible');
     content.classList.add('pushed');
+    logo.classList.add('visible');
   }
 
 }
@@ -286,8 +297,12 @@ function hideOnOverlayClick() {
   var overlay = document.getElementById('overlay');
 
   // Hide open dropdown and overlay elements
-  hideDropdown(openDropdown);
-  overlay.classList.remove('visible');
+  if (!isMobile()) {
+    hideDropdown(openDropdown);
+    overlay.classList.remove('visible');
+  }
+
+  toggleNavbar();
 }
 
 
