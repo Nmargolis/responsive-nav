@@ -12,8 +12,6 @@ router.get('*', function(req, res) {
 
 module.exports = router;
 
-console.log('hello');
-
 app.get('/api/nav.json', function(req, res) {
-    res.send()
+    res.send();
 })
