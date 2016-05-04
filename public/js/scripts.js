@@ -300,9 +300,11 @@ function hideOnOverlayClick() {
   if (!isMobile()) {
     hideDropdown(openDropdown);
     overlay.classList.remove('visible');
-  }
 
+  }
+  else {
   toggleNavbar();
+  }
 }
 
 

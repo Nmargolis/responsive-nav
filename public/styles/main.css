@@ -8,7 +8,10 @@
 */
 
 body {
-    overflow: hidden;
+    position: relative;
+    overflow-x: hidden;
+    width:100vw;
+    height:100vh;
     /*position: fixed;*/
 
     margin: 0;
@@ -100,15 +103,18 @@ transform:translateX(calc(100vw - 100%));
     position: absolute;
     z-index: 9999999999;
 
-    background-color:pink;
+
+    background-color:#fff;
 
     top: 60px;
-    left: 0;
+    /*left: 0;*/
     bottom: 0;
 
+/*    overflow-y: auto;
+*/
     width: calc(100% - 72px);
     left: calc(-100% + 72px);
-    /*height: 100%;*/
+    /*height: calc(100% - 60px);*/
     margin: 0;
     padding: 0;
 
@@ -124,18 +130,38 @@ transform:translateX(calc(100vw - 100%));
 #navcontainer.visible {
      -webkit-transform: translateX(100%);
         transform: translateX(100%);
+    /*left:0;*/
+
+}
+
+.nav-inner {
+    position: absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    width:100%;
+
+    overflow-y: auto;
 
 }
 
 #navbar {
-
+    /*position: absolute;*/
     width: 100%;
-    padding:0px;
+    padding:0;
     margin: 0;
+    /*top: 0;
+    bottom: 0px;
+    padding-bottom:48px;*/
     padding-top: 12px;
-    position: absolute;
-    margin-bottom: 48px;
-    overflow-y: auto;
+    margin-bottom:48px;
+    background-color:white;
+    z-index: 1;
+    position: relative;
+
+
+
 
    /* display: none;*/
     /*
@@ -267,23 +293,33 @@ transform:translateX(calc(100vw - 100%));
 #overlay {
     position: absolute;
     z-index: 999;
-    top: 60px;
-    left: 0;
+    left: -9999999px;
+    top:-999999999px;
     /* Start overlay as hidden */
 
-    display: none;
+    /*display: none;*/
 
-    width: 100%;
-    height: 100%;
+    width:0px;
+
+    transition:opacity .5s ease-in-out;
+
+    display: block;
+    
+    /*height: 100%;*/
     margin: 0;
     padding: 0;
+    opacity:0;
 
     background: rgba(0,0,0,.5);
 }
 
 /* Class to make overlay visible*/
 #overlay.visible {
-    display: block;
+    width: 100%;
+    top:60px;
+    left:0;
+    bottom:0;
+    opacity:1;
 }
 
 #midsection-container {
@@ -291,7 +327,6 @@ transform:translateX(calc(100vw - 100%));
 
     width: 100%;
     height: auto;
-    margin-top: 60px;
 }
 
 #content-wrapper {
@@ -318,7 +353,7 @@ transform:translateX(calc(100vw - 100%));
 
     max-width: 968px;
     margin: auto;
-    padding: 0 24px;
+    padding: 0 24px 60px 24px;
 
     font: 14px/24px Galaxie;
     text-align: center;
@@ -328,6 +363,10 @@ transform:translateX(calc(100vw - 100%));
     margin: 0;
 }
 
+/*#copyright-container {
+    position: relative;
+    height: 100%;
+}*/
 
 #copyright {
     position: absolute;
@@ -338,6 +377,7 @@ transform:translateX(calc(100vw - 100%));
     left: 0;
     padding:16px 24px 0px 24px;
     width: 100%;
+    /*z-index: ;*/
 
     /*height: 100%;*/
     /*margin-right: 72px;*/
@@ -375,7 +415,6 @@ transform:translateX(calc(100vw - 100%));
         height: 72px;
     }
 
-
     #toggle-open-close {
         -webkit-transform: translateX(-100%);
                 transform: translateX(-100%);
@@ -389,18 +428,33 @@ transform:translateX(calc(100vw - 100%));
         height: 72px;
         left: 132px;
         top: 0;
+        overflow: visible;
 
         background: #ec008c;
     }
 
+    #navcontainer.visible {
+     -webkit-transform: translateX(0);
+        transform: translateX(0);
+
+}
+
+    .nav-inner {
+        overflow: visible;
+    }
     #navbar {
         display:         flex;
         display: -webkit-flex;
                 flex-direction: row;
         -webkit-flex-direction: row;
 
+        overflow: visible;
+
         margin: 0;
         padding-top: 0;
+        padding-left: 0;
+        bottom: inherit;
+        background-color: transparent;
 
         -webkit-transform: translateX(0);
                 transform: translateX(0);
@@ -455,6 +509,9 @@ transform:translateX(calc(100vw - 100%));
         vertical-align: middle;
     }
 
+    #overlay.visible{
+        top: 72px;
+    }
 
 
     #midsection-container {
@@ -462,7 +519,7 @@ transform:translateX(calc(100vw - 100%));
 
         width: 100%;
         height: 640px;
-        margin-top: 0;
+
     }
 
     #content-wrapper.pushed {
